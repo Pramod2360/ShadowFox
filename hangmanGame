@@ -1,9 +1,4 @@
-# hangman.py
-# Simple Hangman game with visual progress and hints
-
 import random
-
-# Word list with hints
 WORDS = {
     'python': 'A popular programming language',
     'hangman': 'The game you are playing',

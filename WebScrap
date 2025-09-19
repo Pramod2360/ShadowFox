@@ -1,0 +1,20 @@
+import requests
+from bs4 import BeautifulSoup
+
+def scrape_titles(url):
+    """Scrapes the first 20 headings (h1, h2, h3) from the given URL."""
+    resp = requests.get(url, timeout=10)
+    resp.raise_for_status()
+    soup = BeautifulSoup(resp.text, 'html.parser')
+    titles = [t.get_text(strip=True) for t in soup.find_all(['h1', 'h2', 'h3'])][:20]
+    return titles
+
+if __name__ == '__main__':
+    url = input("Enter a URL to scrape (e.g. https://instagram.com): ").strip()
+    try:
+        titles = scrape_titles(url)
+        print("\nTop headings found:")
+        for t in titles:
+            print("-", t)
+    except Exception as e:
+        print("Error:", e)

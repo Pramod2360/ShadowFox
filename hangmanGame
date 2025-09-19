@@ -1,0 +1,48 @@
+# hangman.py
+# Simple Hangman game with visual progress and hints
+
+import random
+
+# Word list with hints
+WORDS = {
+    'python': 'A popular programming language',
+    'hangman': 'The game you are playing',
+    'cricket': 'A popular sport in India',
+    'notebook': 'Used for Jupyter'
+}
+
+def play():
+    word, hint = random.choice(list(WORDS.items()))
+    guessed = set()
+    attempts = 6
+
+    print("Welcome to Hangman!")
+    print("Hint:", hint)
+
+    while attempts > 0:
+        # Display word with guessed letters
+        display = ' '.join([c if c in guessed else '_' for c in word])
+        print("\nWord:", display)
+
+        # Win check
+        if all(c in guessed for c in word):
+            print("🎉 You won! The word was:", word)
+            return
+
+        guess = input("Guess a letter: ").strip().lower()
+
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter a single valid letter.")
+            continue
+
+        if guess in word:
+            guessed.add(guess)
+            print("✅ Good guess!")
+        else:
+            attempts -= 1
+            print("❌ Wrong! Attempts left:", attempts)
+
+    print("💀 You lost! The word was:", word)
+
+if __name__ == '__main__':
+    play()
